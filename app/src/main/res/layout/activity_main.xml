@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:background="@drawable/ic_bg"
+
     android:orientation="vertical"
     tools:context=".MainActivity">
 
@@ -13,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Quiz App"
+       android:text="Quiz App"
         android:textSize="20dp"
         android:textColor="@color/white"
         android:textStyle="bold" />
@@ -56,17 +57,19 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                  >
                 <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/txtInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Enter name"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
+                android:id="@+id/buttonStart"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:background="@color/purple_500"
-                android:text="Start"
+                android:text="Let's Play"
                 android:textSize="18sp"
                 app:cornerRadius="8dp" />
 
