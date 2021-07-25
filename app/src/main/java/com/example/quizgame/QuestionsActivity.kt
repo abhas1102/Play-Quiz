@@ -7,7 +7,9 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.widget.TintableCompoundDrawablesView
 import kotlinx.android.synthetic.main.activity_questions.*
 import org.w3c.dom.Text
 
@@ -26,6 +28,7 @@ class QuestionsActivity : AppCompatActivity(), View.OnClickListener {
         text_optionTwo.setOnClickListener(this)
         text_optionThree.setOnClickListener(this)
         text_optionFour.setOnClickListener(this)
+        btn_submit.setOnClickListener(this)
         // Log.i("Question size", "${questionsList.size}")
 
       /*  for(i in questionsList.size-1 downTo 0){
@@ -47,9 +50,15 @@ class QuestionsActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun setQuestion(){
-        mCurrentPosition = 1
+
         val question= mQuestionsList!![mCurrentPosition-1]
         defaultOptionsView()
+
+        if(mCurrentPosition == mQuestionsList!!.size){
+            btn_submit.text = "FINISH"
+        }else{
+            btn_submit.text = "SUBMIT"
+        }
 
         progressBar.progress = mCurrentPosition
         numericalProgress.text = "$mCurrentPosition"+"/"+progressBar.max
@@ -91,6 +100,33 @@ class QuestionsActivity : AppCompatActivity(), View.OnClickListener {
             R.id.text_optionFour -> {
                 selectedOptionView(text_optionFour,4)
             }
+            R.id.btn_submit -> {
+                if(mSelectedOptionPosition==0){
+                    mCurrentPosition++
+
+                    when{
+                        mCurrentPosition <= mQuestionsList!!.size ->{
+                            setQuestion()
+                        } else ->{
+                            Toast.makeText(this,"You have successfully completed the Quiz", Toast.LENGTH_SHORT ).show()
+
+                        }
+                    }
+                } else{
+                    val question = mQuestionsList?.get(mCurrentPosition-1)
+                    if(question!!.correctAnswer != mSelectedOptionPosition){
+                        answerView(mSelectedOptionPosition, R.drawable.wrong_option_border_bg)
+                    }
+                    answerView(question.correctAnswer, R.drawable.correct_option_border_bg)
+
+                    if (mCurrentPosition == mQuestionsList!!.size){
+                        btn_submit.text = "FINISH"
+                    } else{
+                        btn_submit.text = "GO TO NEXT QUESTION"
+                    }
+                    mSelectedOptionPosition = 0
+                }
+            }
         }
     }
 
@@ -102,5 +138,22 @@ class QuestionsActivity : AppCompatActivity(), View.OnClickListener {
         tv.background = ContextCompat.getDrawable(this,R.drawable.selected_option_border_bg)
 
 
+    }
+
+    private fun answerView(answer:Int, drawableView:Int){
+        when(answer){
+            1 -> {
+                text_optionOne.background = ContextCompat.getDrawable(this,drawableView)
+            }
+            2 -> {
+                text_optionTwo.background = ContextCompat.getDrawable(this,drawableView)
+            }
+            3 -> {
+                text_optionThree.background = ContextCompat.getDrawable(this,drawableView)
+            }
+            4 -> {
+                text_optionFour.background = ContextCompat.getDrawable(this,drawableView)
+            }
+        }
     }
 }
