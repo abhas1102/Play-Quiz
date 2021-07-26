@@ -2,6 +2,10 @@ package com.example.quizgame
 
 object Constants {
 
+    const val USER_NAME:String = "user_name"
+    const val TOTAL_QUESTIONS:String = "total_questions"
+    const val CORRECT_ANSWERS:String = "correct_answers"
+
     fun getQuestions():ArrayList<Questions>{
         val questionsList = ArrayList<Questions>()
         val question1 = Questions(id = 1,questions = "What country this flag belongs to?",
